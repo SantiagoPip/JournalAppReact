@@ -6,14 +6,15 @@ import { AuthLayout } from '../layout/AuthLayout'
 import { useForm } from '../../hooks/useForm'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkingAuthentication, startGoogleSignIn, startLoginWithEmailAndPassword } from '../../store/auth/thunks'
+const formData = {
+  email:'santiagomoreno@gmail.com',
+  password: '123456'
 
+}
 export const LoginPage = () => {
   const dispatch = useDispatch();
   const {status,errorMessage} = useSelector(state => state.auth)
-  const {email,password,onInputChange} = useForm({
-    email:'santiagomoreno@gmail.com',
-    password: '123456'
-  })
+  const {email,password,onInputChange} = useForm(formData)
   const isAuthenticated = useMemo(()=>status === 'checking',[status])
 
   const onSubmit = (event)=>{
