@@ -1,11 +1,11 @@
-import { SaveOutlined, UploadOutlined } from '@mui/icons-material'
+import { DeleteOutline, SaveOutlined, UploadOutlined } from '@mui/icons-material'
 import { Button, Grid, IconButton, TextField, Typography } from '@mui/material'
 import React, { useEffect, useMemo, useRef } from 'react'
 import { ImageGallery } from '../components'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '../../hooks/useForm'
 import { setActiveNote } from '../../store/journal/journalSlice'
-import { startSaveNote, startUploadingFiles } from '../../store/journal/thunks'
+import { startDeletingNote, startSaveNote, startUploadingFiles } from '../../store/journal/thunks'
 import Swal from 'sweetalert2'
 import 'sweetalert2/dist/sweetalert2.css'
 
@@ -35,8 +35,10 @@ const onSaveNote=()=>{
 }
 const onFileInputChange=({target})=>{
    if(target.files === 0 )return;
-   console.log(target.files,'fileeeeees')
     dispatch(startUploadingFiles(target.files))
+}
+const onDelete=()=>{
+    dispatch(startDeletingNote())
 }
   return (
     <>
@@ -79,6 +81,12 @@ const onFileInputChange=({target})=>{
                 name = 'body'
                 value={body}
                 onChange={onInputChange}/>
+            </Grid>
+            <Grid container justifyContent='end'>
+                <Button onClick={onDelete} sx = {{mt:2}} color='error'>
+                    <DeleteOutline/>
+                    Borrar
+                </Button>
             </Grid>
             <ImageGallery images = {note.imageUrls}/>
         </Grid>
